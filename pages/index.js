@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signIn, signOut, getCsrfToken } from 'next-auth/react';
 
 export default function Home() {
   const { data: session } = useSession();
@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
-        <title>Create Next App</title>
+        <title>Create Next App</title> 
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -93,4 +93,12 @@ export default function Home() {
       </footer>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+    },
+  };
 }
